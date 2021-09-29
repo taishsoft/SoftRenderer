@@ -20,5 +20,6 @@ public:
 	void Quit(int code);
 	void ToggleFullscreen();
 	void HandleKeyEvent(SDL_Keysym* keysym);
+	void HandleEvents();
 };
 
