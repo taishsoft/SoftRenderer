@@ -2,8 +2,9 @@
 #include <SDL.h>
 #include <iostream>
 #include "Color.h"
+#include "../CommonDef.h"
 
-class RenderContext;
+//class RenderContext;
 
 //封装一层SDL
 class CSDL
@@ -23,7 +24,7 @@ public:
 	void HandleKeyEvent(SDL_Keysym* keysym);
 	void HandleEvents();
 	void CheckError(const char* msg);
-	void CheckSDLError(int line = -1);
+	//void CheckSDLError(int line = -1);
 	void SetDrawColor(Color color);
 
 	void DrawPixel(int x, int y);
@@ -41,4 +42,3 @@ private:
 
 	bool windowOK;
 };
-

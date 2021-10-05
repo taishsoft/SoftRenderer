@@ -19,6 +19,7 @@ public:
 	static Color green;
 	static Color blue;
 	static Color black;
+	static Color yellow;
 
 	Color();
 	Color(float r, float g, float b, float a = 1);

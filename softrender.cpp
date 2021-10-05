@@ -55,123 +55,62 @@
 #include <stdio.h>
 #include <string>
 #include <cmath>
+#include "CommonDef.h"
+#include "Rasterizer.h"
+#include "Base/Csdl.h"
+#include "Base/Color.h"
+#include "Math/Mathf.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-//Starts up SDL and creates window
-bool init();
-
 //Frees media and shuts down SDL
 void close();
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-
-bool init()
-{
-	//Initialization flag
-	bool success = true;
-
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-		success = false;
-	}
-	else
-	{
-		//Set texture filtering to linear
-		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			printf("Warning: Linear texture filtering not enabled!");
-		}
-
-		//Create window
-		gWindow = SDL_CreateWindow("SoftRenderer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
-		{
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else
-		{
-			//Create renderer for window
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			if (gRenderer == NULL)
-			{
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-		}
-	}
-
-	return success;
-}
 
 void close()
 {
 	//Destroy window    
-	SDL_DestroyRenderer(gRenderer);
-	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
-	gRenderer = NULL;
+	//SDL_DestroyRenderer(gRenderer);
+	//SDL_DestroyWindow(gWindow);
+	//gWindow = NULL;
+	//gRenderer = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();
 }
 
-void SDLDrawPixel(int x, int y)
-{
-	SDL_RenderDrawPoint(gRenderer, x, SCREEN_HEIGHT - 1 - y);
-}
-
 int main(int argc, char* args[])
 {
-	//Start up SDL and create window
-	if (!init())
-	{
-		printf("Failed to initialize!\n");
-	}
-	else
-	{
-		//Main loop flag
-		bool quit = false;
-		//Event handler
-		SDL_Event e;
+	RenderContext renderContext;
+	renderContext.width = SCREEN_WIDTH;
+	renderContext.height = SCREEN_HEIGHT;
+	renderContext.bpp = sizeof(uint32);
+	renderContext.backBuffer = new uint32[renderContext.width * renderContext.height];
+	renderContext.depthBuffer = new float[renderContext.width * renderContext.height];
 
-		//While application is running
-		while (!quit)
+	Rasterizer rasterizer(&renderContext);
+	//Color tempColor = Color::black;
+	CSDL* sdl = new CSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "SoftRenderer");
+
+	while (true)
+	{
+		sdl->HandleEvents();
+		sdl->Clean(&renderContext, Color::black);
+		//for (int i = 0; i < 100; i++)
+		//{
+		//	rasterizer.DrawPixel(SCREEN_WIDTH * Math::Value(), SCREEN_HEIGHT * Math::Value(), Color::red);
+		//}
+
+		for (int j = 0; j < SCREEN_HEIGHT / 2; j++)
 		{
-			//Handle events on queue
-			while (SDL_PollEvent(&e) != 0)
-			{
-				//User requests quit
-				if (e.type == SDL_QUIT)
-				{
-					quit = true;
-				}
-			}
-
-			//Clear screen
-			SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
-			SDL_RenderClear(gRenderer);
-
-			//Draw vertical line of yellow dots
-			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
-			for (int i = 0; i < SCREEN_HEIGHT; i++)
-			{
-				SDLDrawPixel(SCREEN_WIDTH / 2, i);
-			}
-
-			//Update screen
-			SDL_RenderPresent(gRenderer);
+			rasterizer.DrawPixel(SCREEN_WIDTH / 2, j, Color::red);
 		}
+		sdl->SwapBuffer(&renderContext);
 	}
+
+	delete[] renderContext.backBuffer;
+	delete[] renderContext.depthBuffer;
 
 	//Free resources and close SDL
 	close();
