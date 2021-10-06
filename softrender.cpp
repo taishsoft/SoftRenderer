@@ -107,10 +107,18 @@ int main(int argc, char* args[])
 			rasterizer.DrawPixel(SCREEN_WIDTH / 2, j, Color::red);
 		}
 
+
+		Line2d* line = new Line2d(Vector2(0.0f, 0.0f),
+			Vector2(SCREEN_WIDTH, 300.0f));
+		rasterizer.DrawLine2(line, Color::blue);
+
 		for (int i = 0; i < 1; i++)
 		{
 			Line2d *line = new Line2d(Vector2(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value()),
 				Vector2(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value()));
+
+			//Line2d* line = new Line2d(Vector2(SCREEN_WIDTH * Mathf::Range(-1.0f, 1.0f), SCREEN_HEIGHT * Mathf::Range(-1.0f, 1.0f)),
+				//Vector2(SCREEN_WIDTH * Mathf::Range(-1.0f, 1.0f), SCREEN_HEIGHT * Mathf::Range(-1.0f, 1.0f)));
 			rasterizer.DrawLine2(line, Color::RandomColor());
 		}
 		sdl->SwapBuffer(&renderContext);

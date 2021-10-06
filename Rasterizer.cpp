@@ -165,7 +165,7 @@ void Rasterizer::DrawLine1(Line2d* line, Color c)
 /// <summary>
 /// bresenham算法
 /// https://www.zhihu.com/search?type=content&q=bresenham
-/// 运行报错了
+/// https://github.com/ssloy/tinyrenderer/wiki/Lesson-1:-Bresenham%E2%80%99s-Line-Drawing-Algorithm
 /// </summary>
 /// <param name="line"></param>
 /// <param name="c"></param>
@@ -175,20 +175,8 @@ void Rasterizer::DrawLine2(Line2d* line, Color c)
 	int y1 = line->start.y;
 	int x2 = line->end.x;
 	int y2 = line->end.y;
-
-	int x, y = 0;
-	int eps = 0;
-
-
+	
 	bool steep = false;
-	int dx = x2 - x1;
-	int dy = y2 - y1;
-	y = y1;
-	int yi = 1;
-
-	//int dx = (x1 < x2) ? x2 - x1 : x1 - x2;
-	//int dy = (y1 < y2) ? y2 - y1 : y1 - y2;
-
 	//slope > 1
 	if (abs(x1 - x2) < abs(y1 - y2))
 	{
@@ -202,13 +190,22 @@ void Rasterizer::DrawLine2(Line2d* line, Color c)
 		std::swap(y1, y2);
 	}
 
+	int x, y = 0;
+	int eps = 0;
+
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+	y = y1;
+	int yi = 1;
+
 	if (dy < 0)
 	{
 		yi = -1;
 		dy = -dy;
 	}
 
-	for (int x = x1; x <= x2; x++)
+	//int err = dy * 2;
+	for (x = x1; x <= x2; x++)
 	{
 		if (steep)
 		{
@@ -220,10 +217,13 @@ void Rasterizer::DrawLine2(Line2d* line, Color c)
 		}
 
 		eps += dy;
+		//eps += err;
 		if ((eps << 1) >= dx)
+		//if(eps > dx)
 		{
 			y = y + yi;
 			eps -= dx;
+			//eps -= (dx << 1);
 		}
 	}
 }
