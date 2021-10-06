@@ -12,6 +12,9 @@ public:
 
 	void DrawPixel(int x, int y, Color& c);
 	void DrawLine(Line2d* line, Color c);
+	void DrawLine1(Line2d* line, Color c);
+	void DrawLine2(Line2d* line, Color c);
+
 
 private:
 	RenderContext *renderContext;

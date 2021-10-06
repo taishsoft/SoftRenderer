@@ -1,4 +1,5 @@
 #include "Color.h"
+#include "Mathf.h"
 
 Color Color::red(1, 0, 0, 1);
 Color Color::white(1, 1, 1, 1);
@@ -43,4 +44,9 @@ int Color::GetUintB()
 int Color::GetUintA()
 {
 	return (int)(a * 255);
+}
+
+Color Color::RandomColor()
+{
+	return Color(Mathf::Value(), Mathf::Value(), Mathf::Value(), 1);
 }
