@@ -27,7 +27,13 @@
     <ClCompile Include="Base\Color.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Math.cpp">
+    <ClCompile Include="Math\Mathf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape\Line2d.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +50,13 @@
     <ClInclude Include="Base\Color.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Math.h">
+    <ClInclude Include="Math\Mathf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape\Line2d.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
