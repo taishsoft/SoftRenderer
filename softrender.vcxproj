@@ -23,33 +23,33 @@
     <ProjectGuid>{1CFFA169-F2AC-49FB-8B2E-B09704A788E4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>softrender</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>softrenderer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -73,13 +73,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\soft_renderer\softrenderer\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\soft_renderer\softrenderer\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\study\SoftRenderer\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\study\SoftRenderer\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\study\SoftRenderer\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\study\SoftRenderer\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>c:\study\SoftRenderer\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>c:\study\SoftRenderer\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,6 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\study\SoftRenderer\Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,15 +161,19 @@
   <ItemGroup>
     <ClCompile Include="Base\Csdl.cpp" />
     <ClCompile Include="Base\Color.cpp" />
-    <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="Shape\Line2d.cpp" />
+    <ClCompile Include="Math\Mathf.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="softrender.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Color.h" />
     <ClInclude Include="CommonDef.h" />
     <ClInclude Include="Base\Csdl.h" />
-    <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Shape\Line2d.h" />
+    <ClInclude Include="Math\Vector2.h" />
+    <ClInclude Include="Math\Mathf.h" />
     <ClInclude Include="Rasterizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
