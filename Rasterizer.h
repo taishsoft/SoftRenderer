@@ -16,7 +16,7 @@ public:
 	void DrawLine2(Line2d *line, Color c);
 
 	/// <summary>
-	/// Cohen-SutherlandËã·¨£¬¶ÔÏß¶Î±àÂë£¬°´ÕÕ×ó¡¢ÓÒ¡¢ÏÂ¡¢ÉÏµÄË³Ğò
+	/// Cohen-Sutherlandç®—æ³•ï¼Œå¯¹çº¿æ®µç¼–ç ï¼ŒæŒ‰ç…§å·¦ã€å³ã€ä¸‹ã€ä¸Šçš„é¡ºåº
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="min"></param>
