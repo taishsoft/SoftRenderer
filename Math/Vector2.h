@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 //#include <cmath>
 #include <assert.h>
 #include <iostream>
@@ -34,7 +34,7 @@ public:
 		return v1 + (v2 - v1) * factor;
 	}
 
-	//ÖØÔØ[] vector[0]·µ»Øx
+	//é‡è½½[]è¿ç®—ç¬¦
 	float& operator[](int i)
 	{
 		switch (i)

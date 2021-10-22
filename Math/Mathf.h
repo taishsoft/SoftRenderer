@@ -58,5 +58,10 @@ public:
 	{
 		return (double)rand() / RAND_MAX;
 	}
+
+	static inline float Lerp(float a, float b, float factor)
+	{
+		return a + (b - a) * factor;
+	}
 };
 

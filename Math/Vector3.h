@@ -46,5 +46,11 @@ public:
 
 	Vector3 &operator/=(float num);
 	bool operator!=(Vector3 &v) const;
+
+	//插值函数
+	static inline Vector3 Lerp(const Vector3& v1, const Vector3& v2, float factor)
+	{
+		return v1 + (v2 - v1) * factor;
+	}
 };
 

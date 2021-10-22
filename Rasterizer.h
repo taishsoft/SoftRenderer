@@ -3,6 +3,8 @@
 #include "CommonDef.h"
 #include "Base/Color.h"
 #include "Shape/Line2d.h"
+#include "Math/Vector2.h"
+#include "Base/Vertex.h"
 
 class Rasterizer
 {
@@ -25,6 +27,8 @@ public:
 	int Encode(Vector2& pos, Vector2& min, Vector2& max);
 
 	bool CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max);
+
+	void DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3);
 	
 private:
 	RenderContext *renderContext;

@@ -312,6 +312,8 @@ bool Rasterizer::CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max)
 			
 			//求交点，公式为：由(y2-y1)/(x2-x1)=(y-y1)/(x-x1)推导出:
 			//y = y1 + k*(x - x1),x = x1 + (1/k)*(y - y1)，k为斜率
+
+			//todo x2 == x1的情况
 			k = (y2 - y1) / (x2 - x1);
 			if (code & LINE_LEFT)
 			{
@@ -362,4 +364,27 @@ bool Rasterizer::CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max)
 		line->end.y = y2;
 	}
 	return bAccept;
+}
+
+void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3)
+{
+	const Vertex2D *a = &v1;
+	const Vertex2D *b = &v2;
+	const Vertex2D *c = &v3;
+
+	//对三个顶点按照y值从低到高排序
+	//sort the vertices, lower-to-upper(bubblesort)
+	if (a->position.y > b->position.y)
+	{
+
+		swap(a, b);
+	}
+	if (a->position.y > c->position.y)
+	{
+		swap(a, c);
+	}
+	if (b->position.y > c->position.y)
+	{
+		swap(b, c);
+	}
 }
