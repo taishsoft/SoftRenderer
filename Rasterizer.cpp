@@ -376,7 +376,6 @@ void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Ve
 	//sort the vertices, lower-to-upper(bubblesort)
 	if (a->position.y > b->position.y)
 	{
-
 		swap(a, b);
 	}
 	if (a->position.y > c->position.y)
