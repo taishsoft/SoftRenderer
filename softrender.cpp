@@ -102,16 +102,19 @@ int main(int argc, char* args[])
 		//	rasterizer.DrawPixel(SCREEN_WIDTH * Math::Value(), SCREEN_HEIGHT * Math::Value(), Color::red);
 		//}
 
-		for (int j = 0; j < SCREEN_HEIGHT / 2; j++)
+		//屏幕中间画条直线
+		/*for (int j = 0; j < SCREEN_HEIGHT / 2; j++)
 		{
 			rasterizer.DrawPixel(SCREEN_WIDTH / 2, j, Color::red);
-		}
+		}*/
 
-
-		Line2d* line = new Line2d(Vector2(0.0f, 0.0f),
+		//两点画直线
+		/*Line2d* line = new Line2d(Vector2(0.0f, 0.0f),
 			Vector2(SCREEN_WIDTH, 300.0f));
-		rasterizer.DrawLine2(line, Color::blue);
+		rasterizer.DrawLine2(line, Color::blue);*/
 
+		//随机线条
+		/*
 		for (int i = 0; i < 1; i++)
 		{
 			//Line2d *line = new Line2d(Vector2(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value()),
@@ -120,6 +123,25 @@ int main(int argc, char* args[])
 			Line2d* line = new Line2d(Vector2(SCREEN_WIDTH * Mathf::Range(-1.0f, 1.0f), SCREEN_HEIGHT * Mathf::Range(-1.0f, 1.0f)),
 				Vector2(SCREEN_WIDTH * Mathf::Range(-1.0f, 1.0f), SCREEN_HEIGHT * Mathf::Range(-1.0f, 1.0f)));
 			rasterizer.DrawLine2(line, Color::RandomColor());
+		}
+		*/
+
+		//for (int i = 0; i < 10; i++)
+		{
+			//Vector2 v0(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
+			//Vector2 v1(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
+			//Vector2 v2(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
+			//Color col0 = Color::RandomColor();
+			//Color col1 = Color::RandomColor();
+			//Color col2 = Color::RandomColor();
+			Vector2 v0(120.0f, 20.0f);
+			Vector2 v1(40.0f, 150.0f);
+			Vector2 v2(280.0f, 400.0f);
+			Color col0 = Color::red;
+			Color col1 = Color::blue;
+			Color col2 = Color::yellow;
+			
+			rasterizer.DrawTriangle2D(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
 		}
 		sdl->SwapBuffer(&renderContext);
 	}

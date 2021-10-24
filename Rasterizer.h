@@ -29,6 +29,8 @@ public:
 	bool CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max);
 
 	void DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3);
+
+	void DrawScanLine(const Vertex2D* v1, const Vertex2D* v2);
 	
 private:
 	RenderContext *renderContext;

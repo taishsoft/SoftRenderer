@@ -56,11 +56,16 @@ public:
 		this->color = color;
 	}
 
-	//插值函数，不可以修改类成员
-	Vertex2D interpolate(const Vertex2D &vertex, float t) const
+	/// <summary>
+	/// 插值函数，以factor为因子对自己和目标vertex进行线性插值
+	/// </summary>
+	/// <param name="vertex"></param>
+	/// <param name="factor"></param>
+	/// <returns></returns>
+	Vertex2D interpolate(const Vertex2D &vertex, float factor) const
 	{
-		Vector2 p = Vector2::Lerp(position, vertex.position, t);
-		Color c = Color::Lerp(color, vertex.color, t);
+		Vector2 p = Vector2::Lerp(position, vertex.position, factor);
+		Color c = Color::Lerp(color, vertex.color, factor);
 		return Vertex2D(p, c);
 	}
 };

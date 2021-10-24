@@ -366,6 +366,13 @@ bool Rasterizer::CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max)
 	return bAccept;
 }
 
+/// <summary>
+/// 扫描线算法画三角形，一个循环画完
+/// https://github.com/ssloy/tinyrenderer/wiki/Lesson-2:-Triangle-rasterization-and-back-face-culling
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <param name="v3"></param>
 void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3)
 {
 	const Vertex2D *a = &v1;
@@ -385,5 +392,39 @@ void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Ve
 	if (b->position.y > c->position.y)
 	{
 		swap(b, c);
+	}
+
+	int total_height = c->position.y - a->position.y;
+	for (int i = 0; i < total_height; ++i)
+	{
+		//是否是三角形下半部分，有两种情况：1.可以分为上下部分，那么当i>b.y时就表示下半部分；2.只有下半部分的情况，b.y == a.y
+		bool second_half = i > b->position.y || b->position.y == a->position.y;
+		int segment_height = second_half ? c->position.y - b->position.y : b->position.y - a->position.y;
+		float factor_a = (float)i / total_height;
+		float factor_b = (float)(i - (second_half ? b->position.y - a->position.y : 0)) / segment_height;
+		Vertex2D va = a->interpolate(*c, factor_a);
+		Vertex2D vb = second_half ? b->interpolate(*c, factor_b) : a->interpolate(*b, factor_b);
+		if (va.position.x > vb.position.x)
+		{
+			swap(va, vb);
+		}
+		DrawScanLine(&va, &vb);
+	}
+}
+
+void Rasterizer::DrawScanLine(const Vertex2D* v1, const Vertex2D* v2)
+{
+	int x1 = v1->position.x;
+	int x2 = v2->position.x;
+	int deltaX = x2 - x1;
+	float factor = 0;
+	for (int x = x1; x <= x2; ++x)
+	{
+		if (x2 != x1)
+		{
+			factor = (float)(x - x1) / deltaX;
+		}
+		Color color = Color::Lerp(v1->color, v2->color, factor);
+		DrawPixel(x, v1->position.y, color);
 	}
 }
