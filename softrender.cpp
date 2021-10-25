@@ -126,7 +126,7 @@ int main(int argc, char* args[])
 		}
 		*/
 
-		//for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			//Vector2 v0(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
 			//Vector2 v1(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
@@ -134,9 +134,22 @@ int main(int argc, char* args[])
 			//Color col0 = Color::RandomColor();
 			//Color col1 = Color::RandomColor();
 			//Color col2 = Color::RandomColor();
+
+			//上半三角形
+			//Vector2 v0(120.0f, 20.0f);
+			//Vector2 v1(40.0f, 150.0f);
+			//Vector2 v2(280.0f, 150.0f);
+			
+			//下半三角形
+			/*Vector2 v0(40.0f, 150.0f);
+			Vector2 v1(280.0f, 150.0f);
+			Vector2 v2(120.0f, 400.0f);*/
+
+			//可以分为上下两部分的三角形
 			Vector2 v0(120.0f, 20.0f);
 			Vector2 v1(40.0f, 150.0f);
 			Vector2 v2(280.0f, 400.0f);
+
 			Color col0 = Color::red;
 			Color col1 = Color::blue;
 			Color col2 = Color::yellow;

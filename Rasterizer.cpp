@@ -381,24 +381,17 @@ void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Ve
 
 	//对三个顶点按照y值从低到高排序
 	//sort the vertices, lower-to-upper(bubblesort)
-	if (a->position.y > b->position.y)
-	{
-		swap(a, b);
-	}
-	if (a->position.y > c->position.y)
-	{
-		swap(a, c);
-	}
-	if (b->position.y > c->position.y)
-	{
-		swap(b, c);
-	}
+	if (a->position.y > b->position.y) swap(a, b);
+	if (a->position.y > c->position.y) swap(a, c);
+	if (b->position.y > c->position.y) swap(b, c);
 
 	int total_height = c->position.y - a->position.y;
+	int startY = a->position.y;
+	int endY = c->position.y;
 	for (int i = 0; i < total_height; ++i)
 	{
 		//是否是三角形下半部分，有两种情况：1.可以分为上下部分，那么当i>b.y时就表示下半部分；2.只有下半部分的情况，b.y == a.y
-		bool second_half = i > b->position.y || b->position.y == a->position.y;
+		bool second_half = i > b->position.y - a->position.y || b->position.y == a->position.y;
 		int segment_height = second_half ? c->position.y - b->position.y : b->position.y - a->position.y;
 		float factor_a = (float)i / total_height;
 		float factor_b = (float)(i - (second_half ? b->position.y - a->position.y : 0)) / segment_height;
@@ -412,6 +405,11 @@ void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Ve
 	}
 }
 
+/// <summary>
+/// 画一条扫描线
+/// </summary>
+/// <param name="v1">起点</param>
+/// <param name="v2">终点</param>
 void Rasterizer::DrawScanLine(const Vertex2D* v1, const Vertex2D* v2)
 {
 	int x1 = v1->position.x;
