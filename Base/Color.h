@@ -32,6 +32,15 @@ public:
 
 	static Color RandomColor();
 
+	Color &operator/=(float num);
+	Color &operator*=(float num);
+	Color operator*(float num);
+	Color &operator+=(const Color &c);
+	Color operator+(const Color &c);
+	Color &operator-=(const Color &c);
+	Color &operator*=(const Color &c);
+
+
 	static inline Color Lerp(const Color& c1, const Color& c2, float factor)
 	{
 		float r = Mathf::Lerp(c1.r, c2.r, factor);

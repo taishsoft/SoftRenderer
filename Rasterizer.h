@@ -24,13 +24,17 @@ public:
 	/// <param name="min"></param>
 	/// <param name="max"></param>
 	/// <returns></returns>
-	int Encode(Vector2& pos, Vector2& min, Vector2& max);
+	int Encode(Vector2 &pos, Vector2 &min, Vector2 &max);
 
 	bool CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max);
 
-	void DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3);
+	void DrawTriangle2D_ScanLine(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3);
 
 	void DrawScanLine(const Vertex2D* v1, const Vertex2D* v2);
+
+	void DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D &v3);
+
+	Vector3 Barycentric(Vector2& a, Vector2& b, Vector2& c, Vector2& p);
 	
 private:
 	RenderContext *renderContext;

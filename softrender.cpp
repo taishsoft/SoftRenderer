@@ -154,7 +154,7 @@ int main(int argc, char* args[])
 			Color col1 = Color::blue;
 			Color col2 = Color::yellow;
 			
-			rasterizer.DrawTriangle2D(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
+			rasterizer.DrawTriangle2D_ScanLine(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
 		}
 		sdl->SwapBuffer(&renderContext);
 	}

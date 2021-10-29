@@ -6,7 +6,7 @@ Color Color::white(1, 1, 1, 1);
 Color Color::green(0, 1, 0, 1);
 Color Color::blue(0, 0, 1, 1);
 Color Color::black(0, 0, 0, 1);
-Color Color::yellow(1, 0, 1, 1);
+Color Color::yellow(1, 1, 0, 1);
 
 Color::Color()
 {
@@ -49,4 +49,59 @@ int Color::GetUintA()
 Color Color::RandomColor()
 {
 	return Color(Mathf::Value(), Mathf::Value(), Mathf::Value(), 1);
+}
+
+Color& Color::operator*=(float num)
+{
+	r *= num;
+	g *= num;
+	b *= num;
+	a *= num;
+	return *this;
+}
+
+Color Color::operator*(float num)
+{
+	return Color(r * num, g * num, b * num, a * num);
+}
+
+Color& Color::operator/=(float num)
+{
+	r /= num;
+	g /= num;
+	b /= num;
+	a /= num;
+	return *this;
+}
+
+Color& Color::operator+=(const Color &c)
+{
+	r += c.r;
+	g += c.g;
+	b += c.b;
+	a += c.a;
+	return *this;
+}
+
+Color Color::operator+(const Color& c)
+{
+	return Color(r + c.r, g + c.g, b + c.b, a + c.a);
+}
+
+Color& Color::operator*=(const Color& c)
+{
+	r *= c.r;
+	g *= c.g;
+	b *= c.b;
+	a *= c.a;
+	return *this;
+}
+
+Color& Color::operator-=(const Color& c)
+{
+	r -= c.r;
+	g -= c.g;
+	b -= c.b;
+	a -= c.a;
+	return *this;
 }

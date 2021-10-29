@@ -373,7 +373,7 @@ bool Rasterizer::CohenSutherlandLineClip(Line2d *line, Vector2 min, Vector2 max)
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <param name="v3"></param>
-void Rasterizer::DrawTriangle2D(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3)
+void Rasterizer::DrawTriangle2D_ScanLine(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3)
 {
 	const Vertex2D *a = &v1;
 	const Vertex2D *b = &v2;
@@ -425,4 +425,77 @@ void Rasterizer::DrawScanLine(const Vertex2D* v1, const Vertex2D* v2)
 		Color color = Color::Lerp(v1->color, v2->color, factor);
 		DrawPixel(x, v1->position.y, color);
 	}
+}
+
+/// <summary>
+/// 重心坐标算法画三角形
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <param name="v3"></param>
+void Rasterizer::DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D &v3)
+{
+	//计算AABB
+	Vector2 bboxmin(renderContext->width - 1, renderContext->height - 1);
+	Vector2 bboxmax(0, 0);
+	Vector2 clamp(renderContext->width - 1, renderContext->height - 1);
+
+	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v1.position.x));
+	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v1.position.y));
+
+	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v1.position.x));
+	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v1.position.y));
+
+	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v2.position.x));
+	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v2.position.y));
+
+	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v2.position.x));
+	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v2.position.y));
+
+	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v3.position.x));
+	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v3.position.y));
+
+	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v3.position.x));
+	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v3.position.y));
+	
+	Vector2 p;
+	for (p.x = bboxmin.x; p.x <= bboxmax.x; p.x++)
+	{
+		for (p.y = bboxmin.y; p.y <= bboxmax.y; p.y++)
+		{
+			Vector3 barycentricCoord = Barycentric(v1.position, v2.position, v3.position, p);
+			if (barycentricCoord.x < 0 || barycentricCoord.y < 0 || barycentricCoord.z < 0)
+				continue;
+			barycentricCoord = barycentricCoord * 2.0f;
+			v1.color *= 3.0f;
+			Color col = v1.color * barycentricCoord.x  + v2.color * barycentricCoord.y + v3.color * barycentricCoord.z;
+		}
+	}
+}
+
+/// <summary>
+/// 计算重心坐标
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="c"></param>
+/// <param name="p"></param>
+/// <returns></returns>
+Vector3 Rasterizer::Barycentric(Vector2& a, Vector2& b, Vector2& c, Vector2& p)
+{
+	Vector2 v0 = c - a;
+	Vector2 v1 = b - a;
+	Vector2 v2 = p - a;
+	float dot00 = v0.x * v0.x + v0.y * v0.y;
+	float dot01 = v0.x * v1.x + v0.y * v1.y;
+	float dot02 = v0.x * v2.x + v0.y * v2.y;
+	float dot11 = v1.x * v1.x + v1.y * v1.y;
+	float dot12 = v1.x * v2.x + v1.y * v2.y;
+
+	float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+	float u = (dot11 * dot01 - dot01 * dot12) * invDenom;
+	float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+	float w = 1.0f - u - v;
+
+	return Vector3(u, v, w);
 }
