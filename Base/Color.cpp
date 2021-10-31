@@ -60,7 +60,7 @@ Color& Color::operator*=(float num)
 	return *this;
 }
 
-Color Color::operator*(float num)
+Color Color::operator*(float num) const
 {
 	return Color(r * num, g * num, b * num, a * num);
 }

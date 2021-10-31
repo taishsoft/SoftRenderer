@@ -126,8 +126,8 @@ int main(int argc, char* args[])
 		}
 		*/
 
-		for (int i = 0; i < 10; i++)
-		{
+		//for (int i = 0; i < 10; i++)
+		//{
 			//Vector2 v0(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
 			//Vector2 v1(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
 			//Vector2 v2(SCREEN_WIDTH * Mathf::Value(), SCREEN_HEIGHT * Mathf::Value());
@@ -154,8 +154,9 @@ int main(int argc, char* args[])
 			Color col1 = Color::blue;
 			Color col2 = Color::yellow;
 			
-			rasterizer.DrawTriangle2D_ScanLine(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
-		}
+			//rasterizer.DrawTriangle2D_ScanLine(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
+			rasterizer.DrawTriangle2D_Barycentric(Vertex2D(v0, col0), Vertex2D(v1, col1), Vertex2D(v2, col2));
+		//}
 		sdl->SwapBuffer(&renderContext);
 	}
 

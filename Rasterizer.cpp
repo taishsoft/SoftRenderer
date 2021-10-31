@@ -433,7 +433,7 @@ void Rasterizer::DrawScanLine(const Vertex2D* v1, const Vertex2D* v2)
 /// <param name="v1"></param>
 /// <param name="v2"></param>
 /// <param name="v3"></param>
-void Rasterizer::DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D &v3)
+void Rasterizer::DrawTriangle2D_Barycentric(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3)
 {
 	//计算AABB
 	Vector2 bboxmin(renderContext->width - 1, renderContext->height - 1);
@@ -443,21 +443,22 @@ void Rasterizer::DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D
 	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v1.position.x));
 	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v1.position.y));
 
-	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v1.position.x));
+	bboxmax.x = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v1.position.x));
 	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v1.position.y));
 
 	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v2.position.x));
 	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v2.position.y));
 
-	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v2.position.x));
+	bboxmax.x = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v2.position.x));
 	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v2.position.y));
 
 	bboxmin.x = Mathf::Max(0.0f, Mathf::Min(bboxmin.x, v3.position.x));
 	bboxmin.y = Mathf::Max(0.0f, Mathf::Min(bboxmin.y, v3.position.y));
 
-	bboxmax.y = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v3.position.x));
+	bboxmax.x = Mathf::Min(clamp.x, Mathf::Max(bboxmax.x, v3.position.x));
 	bboxmax.y = Mathf::Min(clamp.y, Mathf::Max(bboxmax.y, v3.position.y));
 	
+
 	Vector2 p;
 	for (p.x = bboxmin.x; p.x <= bboxmax.x; p.x++)
 	{
@@ -466,9 +467,12 @@ void Rasterizer::DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D
 			Vector3 barycentricCoord = Barycentric(v1.position, v2.position, v3.position, p);
 			if (barycentricCoord.x < 0 || barycentricCoord.y < 0 || barycentricCoord.z < 0)
 				continue;
-			barycentricCoord = barycentricCoord * 2.0f;
-			v1.color *= 3.0f;
+
 			Color col = v1.color * barycentricCoord.x  + v2.color * barycentricCoord.y + v3.color * barycentricCoord.z;
+			//Color col = Color::RandomColor();
+
+			//DrawPixel(p.x, renderContext->height - p.y - 1, col);
+			DrawPixel(p.x, p.y, col);
 		}
 	}
 }
@@ -481,7 +485,7 @@ void Rasterizer::DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D
 /// <param name="c"></param>
 /// <param name="p"></param>
 /// <returns></returns>
-Vector3 Rasterizer::Barycentric(Vector2& a, Vector2& b, Vector2& c, Vector2& p)
+Vector3 Rasterizer::Barycentric(const Vector2& a, const Vector2& b, const Vector2& c, const Vector2& p)
 {
 	Vector2 v0 = c - a;
 	Vector2 v1 = b - a;
@@ -493,7 +497,7 @@ Vector3 Rasterizer::Barycentric(Vector2& a, Vector2& b, Vector2& c, Vector2& p)
 	float dot12 = v1.x * v2.x + v1.y * v2.y;
 
 	float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
-	float u = (dot11 * dot01 - dot01 * dot12) * invDenom;
+	float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
 	float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
 	float w = 1.0f - u - v;
 

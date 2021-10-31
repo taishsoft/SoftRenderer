@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <stdint.h>
 #include <math.h>
 #include "Mathf.h"
@@ -34,7 +34,9 @@ public:
 
 	Color &operator/=(float num);
 	Color &operator*=(float num);
-	Color operator*(float num);
+
+	//函数后加const的原因：1.表明函数本身不会修改类成员变量；2.对于const和非const的实参，函数都能接受，否则只能接受非const的实参
+	Color operator*(float num) const;
 	Color &operator+=(const Color &c);
 	Color operator+(const Color &c);
 	Color &operator-=(const Color &c);

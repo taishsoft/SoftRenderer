@@ -32,9 +32,9 @@ public:
 
 	void DrawScanLine(const Vertex2D* v1, const Vertex2D* v2);
 
-	void DrawTriangle2D_Barycentric(Vertex2D &v1, Vertex2D &v2, Vertex2D &v3);
+	void DrawTriangle2D_Barycentric(const Vertex2D &v1, const Vertex2D &v2, const Vertex2D &v3);
 
-	Vector3 Barycentric(Vector2& a, Vector2& b, Vector2& c, Vector2& p);
+	Vector3 Barycentric(const Vector2& a, const Vector2& b, const Vector2& c, const Vector2& p);
 	
 private:
 	RenderContext *renderContext;
